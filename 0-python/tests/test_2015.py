@@ -3,6 +3,7 @@ from advent_of_code.year2015.day2 import total_wrapping_paper
 from advent_of_code.year2015.day3 import visited_houses
 from advent_of_code.year2015.day4 import mining_coins
 from advent_of_code.year2015.day5 import nice_string
+from advent_of_code.year2015.day6 import count_lights
 
 
 def test_day1_1():
@@ -98,3 +99,14 @@ def test_day5_4():
 def test_day5_5():
     input_string = "dvszwmarrgswjxmb"
     assert nice_string(input_string) == "naughty"
+
+
+# ============================================================================
+
+
+def test_day6_1():
+    instructions1 = "turn on 0,0 through 999,999"
+    instructions2 = "toggle 0,0 through 999,0"
+    instructions3 = "turn off 499,499 through 500,500"
+
+    assert count_lights([instructions1, instructions2, instructions3]) == 998996

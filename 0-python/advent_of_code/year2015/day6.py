@@ -1,39 +1,62 @@
 import re
-from typing import List
+from typing import List, Tuple
 
 
-def count_lights(instructions: List[str]):
+def count_lights(instructions: List[str]) -> int:
+    lit_lights = 0  # prevent unbound
     n_rows, n_cols = 1000, 1000
 
-    light_array = [[1 for col in range(n_cols)] for row in range(n_rows)]
+    light_array = [[0 for _ in range(n_cols)] for _ in range(n_rows)]
 
     for instruction in instructions:
-        action, coordinate = extract_instruction(instruction)
+        lit_lights = 0
+
+        action, coordinate1, coordinate2 = extract_instruction(instruction)
+
+        # now extract coordinate
+        for x in range(coordinate1[0], coordinate2[0] + 1):
+            for y in range(coordinate1[1], coordinate2[1] + 1):
+                light_array[y][x] = excute_action(
+                    action, current_state=light_array[y][x]
+                )
+
+        for x in range(n_cols):
+            for y in range(n_rows):
+                if light_array[y][x] == 1:
+                    lit_lights += 1
+
+        print(f"Current have {lit_lights} lights is on")
+
+    return lit_lights
 
 
-def excute_action(action: str, state: bool):
+def excute_action(action: str, current_state: int) -> int:
     if action == "turn on":
-        state = True
+        return 1
 
-    if action == "turn off":
-        state = False
+    elif action == "turn off":
+        return 0
 
-    if action == "toggle":
-        state = True
+    else:
+        return 1 - current_state
 
 
-def extract_instruction(instruction: str):
-    extracted_instruction = []
-
+def extract_instruction(
+    instruction: str,
+) -> Tuple[str, Tuple[int, int], Tuple[int, int]]:
     actions = ["turn on", "toggle", "turn off"]
-    for action in actions:
-        if action in instruction:
-            extracted_instruction.append(action)
-            break
+    action = next((a for a in actions if a in instruction), None)
 
-    pattern = r"^\d+,\d+$"
-    matches = re.findall(pattern, instruction)
+    if action is None:
+        raise ValueError("No valid action found in instruction")
 
-    extracted_instruction.append(matches)
+    coordinates = re.findall(r"\d+,\d+", instruction)
+    if len(coordinates) != 2:
+        raise ValueError(
+            "Instruction must contain exactly two coordinate pairs"
+        )
 
-    return extracted_instruction
+    x1, y1 = map(int, coordinates[0].split(","))
+    x2, y2 = map(int, coordinates[1].split(","))
+
+    return action, (x1, y1), (x2, y2)

@@ -1,4 +1,4 @@
-def visited_houses(moves: str):
+def visited_houses(moves: str) -> int:
     x, y = 0, 0
     visited_houses = set()
     visited_houses.add((x, y))
