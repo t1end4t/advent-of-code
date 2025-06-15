@@ -1,9 +1,9 @@
-from src.year2015.day1 import find_floor
-from src.year2015.day2 import total_wrapping_paper
-from src.year2015.day3 import visited_houses
-from src.year2015.day4 import mining_coins
-from src.year2015.day5 import nice_string
-from src.year2015.day6 import count_lights
+from year2015.day1 import find_floor
+from year2015.day2 import total_wrapping_paper
+from year2015.day3 import visited_houses
+from year2015.day4 import mining_coins
+from year2015.day5 import nice_string
+from year2015.day6 import count_lights
 
 
 def test_day1_1():
