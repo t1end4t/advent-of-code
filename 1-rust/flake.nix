@@ -1,5 +1,5 @@
 {
-  description = "Rust developer environment";
+  description = "Nix-flake-based Rust development environment";
 
   inputs = {
     devenv-root = {
@@ -12,6 +12,12 @@
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
   };
 
