@@ -65,3 +65,8 @@ package-lock.json
 .eslintcache
 *v8.log
 /lib/
+
+# nix stuff
+.devenv/
+.direnv/
+.pre-commit-config.yaml
